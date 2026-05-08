@@ -118,3 +118,19 @@ VALUES (
 - TTL — creating a vector index on a table with `default_time_to_live` is rejected
 - Writes with TTL on a column with a vector index are ignored
 - `DISTINCT`, `TOKEN`, `CONTAINS` operators are not supported in vector queries
+
+### TRUNCATE Does Not Clear the Vector Index
+
+⚠️ **`TRUNCATE` does not propagate to the CDC log.** The vector store updates its in-memory index exclusively through CDC, so a `TRUNCATE` is invisible to it — the `CUSTOM INDEX` remains in place and the vector store keeps all previously indexed vectors in memory.
+
+**Solution:** To fully reset a table and its vector index, **drop and recreate both the table and the custom index**:
+
+```sql
+DROP INDEX IF EXISTS myapp.doc_embedding_idx;
+DROP TABLE IF EXISTS myapp.documents;
+
+CREATE TABLE myapp.documents ( ... );
+CREATE CUSTOM INDEX doc_embedding_idx ON myapp.documents(embedding) USING 'vector_index' ...;
+```
+
+Never rely on `TRUNCATE` to clear vector index state.
