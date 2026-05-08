@@ -109,3 +109,7 @@ ANN queries require a `LIMIT` — ScyllaDB will reject the query without one.
 
 **TTL is needed:**
 - Vector indexes do not support TTL. Workaround: use application-level deletion with a background job that deletes expired rows.
+
+**User wants to clear all vectors (reset the table):**
+- `TRUNCATE` does **not** clear the vector index. The vector store updates its index only through CDC, and `TRUNCATE` is not propagated to CDC — the `CUSTOM INDEX` remains, and previously indexed vectors stay in memory.
+- The only correct solution is to **drop and recreate both the table and the custom index**. See `references/vector-type-and-indexing.md` for the exact DDL.
