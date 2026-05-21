@@ -1,0 +1,24 @@
+{
+  "name": "scylladb",
+  "version": "1.0.0",
+  "description": "Official ScyllaDB agent skills. Bundles guided skills for ScyllaDB Cloud setup, CQL data modeling, and Vector Search; each is invoked independently by the agent when relevant.",
+  "author": {
+    "name": "ScyllaDB",
+    "email": "support@scylladb.com"
+  },
+  "homepage": "https://www.scylladb.com",
+  "repository": "https://github.com/scylladb/agent-skills",
+  "license": "Apache-2.0",
+  "logo": "assets/scylladb-logo-vertical.png",
+  "keywords": [
+    "scylla",
+    "scylladb",
+    "database",
+    "nosql",
+    "cql",
+    "data modeling",
+    "vector search",
+    "semantic search",
+    "rag"
+  ]
+}
